@@ -89,7 +89,7 @@ session_start();
 
       <header class="main-header">
         <!-- Logo -->
-        <a href="?module=beranda" class="logo">
+        <a href="?module=start" class="logo">
           <img src="assets/img/logo-blue.png" alt="logo" style="margin-top:-15px;margin-right:5px">
           <span style="font-size:20px">MEDISYS</span>
         </a>
