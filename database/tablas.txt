@@ -1,0 +1,61 @@
+create table if not exists usuario (
+	id_user int(3) not null,
+	username varchar(50) not null,
+	name_user varchar(50) not null,
+	password varchar(50) not null,
+	email varchar(50) default null,
+	telefono varchar(13) default null,
+	foto varchar(100) default null,
+	permisos_acceso enum('Super Admin','Gerente','Almacen') not null,
+	status enum('activo','bloqueado') not null default 'activo',
+	created_at timestamp not null default CURRENT_TIMESTAMP,
+	updated_at timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE usuario 
+ADD PRIMARY KEY (id_user),
+ADD KEY level (permisos_acceso);
+
+ALTER TABLE usuario
+MODIFY id_user int(3) not null auto_increment, auto_increment=3;
+
+create table if not exists medicamentos (
+	codigo varchar(7) not null,
+	nombre varchar(50) not null,
+	precio_compra int(11) not null,
+	precio_venta int(11) not null,
+	unidad varchar(20) not null,
+	stock int(11) not null,
+	created_user  int(3) not null,
+	created_date timestamp not null default current_timestamp,
+	updated_user int(3) not null,
+	updated_date timestamp not null default current_timestamp on update current_timestamp
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE medicamentos
+ADD PRIMARY KEY (codigo),
+ADD KEY created_user (created_user),
+ADD KEY updated_user (updated_user);
+
+ALTER TABLE medicamentos
+ADD CONSTRAINT medicamentos_ibfk_1 FOREIGN KEY (created_user) REFERENCES usuario(id_user) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT medicamentos_ibfk_2 FOREIGN KEY (updated_user) REFERENCES usuario(id_user) ON DELETE CASCADE ON UPDATE CASCADE;
+
+create table if not exists transaccion_medicamentos (
+	codigo_transaccion varchar(15) not null,
+	fecha date not null,
+	codigo varchar(7) not null,
+	numero int(11) not null,
+	created_user int(3) not null,
+	created_date timestamp not null default current_timestamp on update current_timestamp,
+	tipo_transaccion varchar(50) not null
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE transaccion_medicamentos 
+ADD PRIMARY KEY (codigo_transaccion),
+ADD KEY id_barang (codigo),
+ADD KEY created_user(created_user);
+
+ALTER TABLE transaccion_medicamentos
+ADD CONSTRAINT transaccion_medicamentos_ibfk_1 FOREIGN KEY (codigo) REFERENCES medicamentos (codigo) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT transaccion_medicamentos_ibfk_2 FOREIGN KEY (created_user) REFERENCES usuario(id_user) ON DELETE CASCADE ON UPDATE CASCADE;
