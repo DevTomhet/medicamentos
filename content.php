@@ -25,22 +25,22 @@ if (empty($_SESSION['username']) && empty($_SESSION['password'])) {
     include "modules/stock_inventory/view.php";
   }
   elseif ($_GET['module'] == 'stock_report') {
-    include "module/stock_report/view.php";
+    include "modules/stock_report/view.php";
   }
   elseif ($_GET['module'] == 'user') {
-    include "module/user/view.php";
+    include "modules/user/view.php";
   }
   elseif ($_GET['module'] == 'form_user') {
-    include "module/user/form.php";
+    include "modules/user/form.php";
   }
   elseif ($_GET['module'] == 'profile') {
     include "modules/profile/view.php";
   }
   elseif ($_GET['module'] == 'form_profile') {
-    include "module/profile/form.php";
+    include "modules/profile/form.php";
   }
   elseif ($_GET['module'] == 'password') {
-    include "module/password/view.php";
+    include "modules/password/view.php";
   }
 }
 ?>
